@@ -8,6 +8,8 @@
 
 #import "SJAxisView.h"
 
+#define BASE_TAG_COVERVIEW 100
+
 @interface SJAxisView() {
     /**
      *  x 轴长度
@@ -21,6 +23,9 @@
      *  折线点集合
      */
     NSMutableArray *pointArray;
+    
+    CGFloat PerItemWidth;
+
 }
 
 
@@ -82,6 +87,7 @@
     for (int i = 0; i < self.xMarkCount - 1; i ++) {
 
         CGFloat perMark_W = xAxis_L / (self.xMarkCount - 1);
+        PerItemWidth = perMark_W;
         CGFloat curMark_X = perMark_W * (i + 1);
 
         UIBezierPath *yAxisPath = [[UIBezierPath alloc] init];
@@ -182,6 +188,45 @@
         [self.layer addSublayer:gradientLayer];
         
     }
+    
+    {
+        for (int i = 0; i < pointArray.count; i ++) {
+            
+            UIView *coverView = [[UIView alloc] init];
+            coverView.tag = BASE_TAG_COVERVIEW + i;
+            
+            UITapGestureRecognizer *gesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesutreAction:)];
+            [coverView addGestureRecognizer:gesutre];
+            
+            if (i == 0) {
+                coverView.frame = CGRectMake(0, 0, PerItemWidth  / 2, yAxis_L);
+               
+                coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.3];
+                [self addSubview:coverView];
+            }
+            else if (i == pointArray.count - 1) {
+                CGPoint point = [pointArray[i] CGPointValue];
+               coverView.frame = CGRectMake(point.x - PerItemWidth / 2, 0, PerItemWidth  / 2, yAxis_L);
+                coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.3];
+                [self addSubview:coverView];
+            }
+            else {
+                CGPoint point = [pointArray[i] CGPointValue];
+                coverView.frame = CGRectMake(point.x - PerItemWidth / 2, 0, PerItemWidth, yAxis_L);
+                coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.3];
+                [self addSubview:coverView];
+            }
+        }
+    }
+}
+
+- (void)gesutreAction:(UITapGestureRecognizer *)sender {
+    
+    NSInteger index = sender.view.tag - BASE_TAG_COVERVIEW;
+    
+    NSLog(@"valueArray is -- %@",self.valueArray[index]);
+
+    
     
 }
 
