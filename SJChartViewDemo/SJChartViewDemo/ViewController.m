@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 #import "SJAxisView.h"
+#import "SJChartAssistView.h"
 
 @interface ViewController ()
 
@@ -31,10 +32,16 @@
     
     
     
-    SJAxisView *axisView = [[SJAxisView alloc] initWithFrame:CGRectMake(50, 100,CGRectGetWidth([UIScreen mainScreen].bounds)- 100, 200)];
-    axisView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:axisView];
 
+
+    SJChartAssistView *chartAssistView = [[SJChartAssistView alloc] initWithFrame:CGRectMake(10, 50, CGRectGetWidth([UIScreen mainScreen].bounds) - 20, 260)];
+    chartAssistView.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:chartAssistView];
+    
+    SJAxisView *axisView = [[SJAxisView alloc] init];
+    [chartAssistView addSubview:axisView];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

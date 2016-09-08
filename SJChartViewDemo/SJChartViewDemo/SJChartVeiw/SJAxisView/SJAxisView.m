@@ -8,9 +8,42 @@
 
 #import "SJAxisView.h"
 
-#define BASE_TAG_COVERVIEW 100
+/**
+ *  Y轴刻度标签 与 Y轴 之间 空隙
+ */
+#define HORIZON_YMARKLAB_YAXISLINE 10.f
+
+/**
+ *  Y轴刻度标签  宽度
+ */
+#define YMARKLAB_WIDTH 25.f
+
+/**
+ *  Y轴刻度标签  高度
+ */
+#define YMARKLAB_HEIGHT 16.f
+/**
+ *  X轴刻度标签  宽度
+ */
+
+#define XMARKLAB_WIDTH 40.f
+
+/**
+ *  X轴刻度标签  高度
+ */
+#define XMARKLAB_HEIGHT 16.f
+
 
 @interface SJAxisView() {
+    
+    /**
+     *  视图的宽度
+     */
+    CGFloat axisViewWidth;
+    /**
+     *  视图的高度
+     */
+    CGFloat axisViewHeight;
     /**
      *  x 轴长度
      */
@@ -19,44 +52,90 @@
      *  y 轴长度
      */
     CGFloat yAxis_L;
+    
     /**
      *  折线点集合
      */
     NSMutableArray *pointArray;
     
     CGFloat PerItemWidth;
-
+    
+    NSInteger lastSeletedIndex;
 }
 
-
-
 @end
+
 @implementation SJAxisView
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+
+- (instancetype)initWithPerWidth:(CGFloat)perWidth perHeight:(CGFloat)perHeight yMarkCount:(NSInteger)yMarkCount xMarkCount:(NSInteger)xMarkCount maxValue:(CGFloat) maxValue{
+    return nil;
+}
+
+- (instancetype) init {
+    
+    self = [super init];
+    
     if (self) {
         
-        xAxis_L = frame.size.width;
-        yAxis_L = frame.size.height;
+        self.spaceBetweenXGridline = 63.5;
+        self.spaceBetweenYGridline = 40;
         
-        self.xMarkCount = 5;
-        self.yMarkCount = 5;
+        self.xMarkCount = 6;
+        self.yMarkCount = 10;
         
         self.maxValue = 100;
+        
+        axisViewWidth = self.spaceBetweenXGridline * (self.xMarkCount - 1) + HORIZON_YMARKLAB_YAXISLINE + YMARKLAB_WIDTH + XMARKLAB_WIDTH / 2.0;
+       
+        axisViewHeight = self.spaceBetweenYGridline * self.yMarkCount + XMARKLAB_HEIGHT + YMARKLAB_HEIGHT;
+        
+        xAxis_L = self.spaceBetweenXGridline * (self.xMarkCount - 1);
+        
+        yAxis_L = self.spaceBetweenYGridline * self.yMarkCount;
+        
+        self.frame  = CGRectMake(0, 0, axisViewWidth, axisViewHeight);
+       
         [self s_setupViews];
     }
     return  self;
 }
 
-
 - (void)s_setupViews {
+    
+    self.backgroundColor = [UIColor yellowColor];
+    
+    CGFloat start_X = HORIZON_YMARKLAB_YAXISLINE + YMARKLAB_WIDTH;
+    CGFloat start_Y = YMARKLAB_HEIGHT / 2.0;
+    
+    // y 轴上的刻度标签
+    for (int i = 0; i <= self.yMarkCount; i ++) {
+        
+        UILabel *markLab = [[UILabel alloc] initWithFrame:CGRectMake(0, start_Y - YMARKLAB_HEIGHT / 2 + i * self.spaceBetweenYGridline, YMARKLAB_WIDTH, YMARKLAB_HEIGHT)];
+        markLab.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.5];
+        markLab.textAlignment = NSTextAlignmentRight;
+        markLab.font = [UIFont systemFontOfSize:12.0];
+        markLab.text = [NSString stringWithFormat:@"%.f",self.maxValue / self.yMarkCount * (self.yMarkCount - i)];
+        [self addSubview:markLab];
+    }
+    
+    
+    // x 轴上的刻度标签
+    for (int i = 0;i < self.xMarkCount; i ++) {
+        
+        UILabel *markLab = [[UILabel alloc] initWithFrame:CGRectMake(start_X - XMARKLAB_WIDTH / 2 + i * self.spaceBetweenXGridline, yAxis_L + YMARKLAB_HEIGHT, XMARKLAB_WIDTH, XMARKLAB_HEIGHT)];
+        markLab.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.6];
+        markLab.textAlignment = NSTextAlignmentCenter;
+        markLab.font = [UIFont systemFontOfSize:11.0];
+        markLab.text = [NSString stringWithFormat:@"09-0%d",i + 1];
+        [self addSubview:markLab];
+    }
     
     // y 轴
     {
         UIBezierPath *yAxisPath = [[UIBezierPath alloc] init];
-        [yAxisPath moveToPoint:CGPointMake(0, yAxis_L)];
-        [yAxisPath addLineToPoint:CGPointMake(0, 0)];
+        [yAxisPath moveToPoint:CGPointMake(start_X, start_Y + yAxis_L)];
+        [yAxisPath addLineToPoint:CGPointMake(start_X, start_Y)];
         
         CAShapeLayer *yAxisLayer = [CAShapeLayer layer];
         // 设置线为虚线
@@ -70,8 +149,8 @@
     // x 轴
     {
         UIBezierPath *xAxisPath = [[UIBezierPath alloc] init];
-        [xAxisPath moveToPoint:CGPointMake(0, yAxis_L)];
-        [xAxisPath addLineToPoint:CGPointMake(xAxis_L, yAxis_L)];
+        [xAxisPath moveToPoint:CGPointMake(start_X, yAxis_L + start_Y)];
+        [xAxisPath addLineToPoint:CGPointMake(xAxis_L + start_X, yAxis_L + start_Y)];
         
         CAShapeLayer *xAxisLayer = [CAShapeLayer layer];
         // 设置线为虚线
@@ -88,11 +167,11 @@
 
         CGFloat perMark_W = xAxis_L / (self.xMarkCount - 1);
         PerItemWidth = perMark_W;
-        CGFloat curMark_X = perMark_W * (i + 1);
+        CGFloat curMark_X = start_X + perMark_W * (i + 1);
 
         UIBezierPath *yAxisPath = [[UIBezierPath alloc] init];
-        [yAxisPath moveToPoint:CGPointMake(curMark_X, yAxis_L)];
-        [yAxisPath addLineToPoint:CGPointMake(curMark_X, 0)];
+        [yAxisPath moveToPoint:CGPointMake(curMark_X, yAxis_L + start_Y)];
+        [yAxisPath addLineToPoint:CGPointMake(curMark_X, start_Y)];
         
         CAShapeLayer *yAxisLayer = [CAShapeLayer layer];
         [yAxisLayer setLineDashPattern:[NSArray arrayWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:1.5], nil]]; // 设置线为虚线
@@ -110,8 +189,8 @@
         CGFloat curMark_Y = perMark_W * i;
         
         UIBezierPath *xAxisPath = [[UIBezierPath alloc] init];
-        [xAxisPath moveToPoint:CGPointMake(0, curMark_Y)];
-        [xAxisPath addLineToPoint:CGPointMake(xAxis_L, curMark_Y)];
+        [xAxisPath moveToPoint:CGPointMake(start_X, curMark_Y + start_Y)];
+        [xAxisPath addLineToPoint:CGPointMake(start_X + xAxis_L, curMark_Y + start_Y)];
         
         CAShapeLayer *xAxisLayer = [CAShapeLayer layer];
         [xAxisLayer setLineDashPattern:[NSArray arrayWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:1.5], nil]];
@@ -120,115 +199,6 @@
         xAxisLayer.path = xAxisPath.CGPath;
         [self.layer addSublayer:xAxisLayer];
     }
-    
-    
-    // 画折线图
-    {
-        self.valueArray = @[@40,@50,@70,@50,@60];
-        
-        pointArray = [NSMutableArray array];
-    
-        UIBezierPath *pAxisPath = [[UIBezierPath alloc] init];
-
-        for (int i = 0; i < self.valueArray.count; i ++) {
-            
-            CGFloat perMark_W = xAxis_L / (self.xMarkCount - 1);
-            CGFloat point_X = perMark_W * i;
-            
-            CGFloat value = [self.valueArray[i] floatValue];
-            CGFloat percent = value / self.maxValue;
-            CGFloat point_Y = yAxis_L * (1 - percent);
-            
-            CGPoint point = CGPointMake(point_X, point_Y);
-            
-            [pointArray addObject:[NSValue valueWithCGPoint:point]];
-            
-            if (i == 0) {
-                 [pAxisPath moveToPoint:point];
-            }
-            else {
-                 [pAxisPath addLineToPoint:point];
-            }
-        }
-        
-        CAShapeLayer *pAxisLayer = [CAShapeLayer layer];
-        pAxisLayer.lineWidth = 1;
-        pAxisLayer.strokeColor = [UIColor greenColor].CGColor;
-        pAxisLayer.fillColor = [UIColor clearColor].CGColor;
-        pAxisLayer.path = pAxisPath.CGPath;
-        [self.layer addSublayer:pAxisLayer];
-    }
-    
-    // 渐变阴影
-    {
-        UIBezierPath *gradientPath = [[UIBezierPath alloc] init];
-        
-        [gradientPath moveToPoint:CGPointMake(0, yAxis_L)];
-
-        for (int i; i < pointArray.count; i ++) {
-            [gradientPath addLineToPoint:[pointArray[i] CGPointValue]];
-        }
-        
-        CGPoint endPoint = [[pointArray lastObject] CGPointValue];
-        endPoint = CGPointMake(endPoint.x, yAxis_L);
-        [gradientPath addLineToPoint:endPoint];
-
-        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-        gradientLayer.frame = CGRectMake(0, 0, xAxis_L, yAxis_L);
-        gradientLayer.colors = @[(__bridge id)[UIColor colorWithRed:50/255.0 green:255/255.0 blue:50/255.0 alpha:0.8].CGColor,(__bridge id)[UIColor colorWithRed:225/255.0 green:255/255.0 blue:225/255.0 alpha:0.2].CGColor];
-        gradientLayer.accessibilityPath = gradientPath;
-        gradientLayer.locations=@[@0.0,@1.0];
-        gradientLayer.startPoint = CGPointMake(0.0,0.0);
-        gradientLayer.endPoint = CGPointMake(0.0,1);
-       
-        CAShapeLayer *arc = [CAShapeLayer layer];
-        arc.path = gradientPath.CGPath;
-        gradientLayer.mask = arc;
-        
-        [self.layer addSublayer:gradientLayer];
-        
-    }
-    
-    {
-        for (int i = 0; i < pointArray.count; i ++) {
-            
-            UIView *coverView = [[UIView alloc] init];
-            coverView.tag = BASE_TAG_COVERVIEW + i;
-            
-            UITapGestureRecognizer *gesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesutreAction:)];
-            [coverView addGestureRecognizer:gesutre];
-            
-            if (i == 0) {
-                coverView.frame = CGRectMake(0, 0, PerItemWidth  / 2, yAxis_L);
-               
-                coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.3];
-                [self addSubview:coverView];
-            }
-            else if (i == pointArray.count - 1) {
-                CGPoint point = [pointArray[i] CGPointValue];
-               coverView.frame = CGRectMake(point.x - PerItemWidth / 2, 0, PerItemWidth  / 2, yAxis_L);
-                coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.3];
-                [self addSubview:coverView];
-            }
-            else {
-                CGPoint point = [pointArray[i] CGPointValue];
-                coverView.frame = CGRectMake(point.x - PerItemWidth / 2, 0, PerItemWidth, yAxis_L);
-                coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.3];
-                [self addSubview:coverView];
-            }
-        }
-    }
 }
-
-- (void)gesutreAction:(UITapGestureRecognizer *)sender {
-    
-    NSInteger index = sender.view.tag - BASE_TAG_COVERVIEW;
-    
-    NSLog(@"valueArray is -- %@",self.valueArray[index]);
-
-    
-    
-}
-
 
 @end

@@ -13,10 +13,21 @@
 
 @property (nonatomic, assign) CGFloat maxValue;
 
+@property (nonatomic, strong) NSArray *valueArray;
+
 @property (nonatomic, assign) NSInteger yMarkCount;
 
 @property (nonatomic, assign) NSInteger xMarkCount;
 
-@property (nonatomic, strong) NSArray *valueArray;
+/**
+ *  与y轴平行的网格线的间距
+ */
+@property (nonatomic, assign) CGFloat spaceBetweenYGridline;
+
+/**
+ *  与y轴平行的网格线的间距
+ */
+@property (nonatomic, assign) CGFloat spaceBetweenXGridline;
+
 
 @end
