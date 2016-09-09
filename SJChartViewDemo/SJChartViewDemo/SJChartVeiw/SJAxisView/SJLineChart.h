@@ -34,6 +34,6 @@
  */
 @property (nonatomic, assign) CGFloat maxValue;
 
-- (void)showLineChart;
+- (void)show;
 
 @end

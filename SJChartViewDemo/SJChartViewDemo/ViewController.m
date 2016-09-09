@@ -33,7 +33,7 @@
     SJLineChart *chartAssistView = [[SJLineChart alloc] initWithFrame:CGRectMake(10, 50, CGRectGetWidth([UIScreen mainScreen].bounds) - 20, 260)];
     [self.view addSubview:chartAssistView];
     
-    [chartAssistView showLineChart];
+    [chartAssistView show];
 
 }
 
