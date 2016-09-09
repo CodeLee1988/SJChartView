@@ -8,8 +8,8 @@
 
 #import "ViewController.h"
 
-#import "SJAxisView.h"
-#import "SJChartAssistView.h"
+
+#import "SJLineChart.h"
 
 @interface ViewController ()
 
@@ -30,33 +30,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
-
-
-    SJChartAssistView *chartAssistView = [[SJChartAssistView alloc] initWithFrame:CGRectMake(10, 50, CGRectGetWidth([UIScreen mainScreen].bounds) - 20, 260)];
-    chartAssistView.backgroundColor = [UIColor lightGrayColor];
+    SJLineChart *chartAssistView = [[SJLineChart alloc] initWithFrame:CGRectMake(10, 50, CGRectGetWidth([UIScreen mainScreen].bounds) - 20, 260)];
     [self.view addSubview:chartAssistView];
     
-    SJAxisView *axisView = [[SJAxisView alloc] init];
-    [chartAssistView addSubview:axisView];
-    
-    
-}
+    [chartAssistView showLineChart];
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

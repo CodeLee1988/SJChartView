@@ -10,24 +10,39 @@
 
 @interface SJAxisView : UIView
 
+@property (nonatomic, strong) NSArray *valueArray;
 
 @property (nonatomic, assign) CGFloat maxValue;
 
-@property (nonatomic, strong) NSArray *valueArray;
-
-@property (nonatomic, assign) NSInteger yMarkCount;
-
-@property (nonatomic, assign) NSInteger xMarkCount;
+/**
+ *  Y轴刻度标签
+ */
+@property (nonatomic, strong) NSArray *yMarkTitles;
+/**
+ *  X轴刻度标签
+ */
+@property (nonatomic, strong) NSArray *xMarkTitles;
 
 /**
- *  与y轴平行的网格线的间距
+ *  与x轴平行的网格线的间距
  */
-@property (nonatomic, assign) CGFloat spaceBetweenYGridline;
+@property (nonatomic, assign) CGFloat xScaleMarkLEN;
 
 /**
- *  与y轴平行的网格线的间距
+ *  网格线的起始点
  */
-@property (nonatomic, assign) CGFloat spaceBetweenXGridline;
+@property (nonatomic, assign) CGPoint startPoint;
 
+/**
+ *  x 轴长度
+ */
+@property (nonatomic, assign) CGFloat yAxis_L;
+/**
+ *  y 轴长度
+ */
+@property (nonatomic, assign) CGFloat xAxis_L;
+
+// 绘图
+- (void)mapping;
 
 @end

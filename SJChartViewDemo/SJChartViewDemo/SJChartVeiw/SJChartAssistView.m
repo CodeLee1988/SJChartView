@@ -11,7 +11,6 @@
 @interface SJChartAssistView()
 {
     UILabel *titleLab;
-    
 }
 
 @end
@@ -23,24 +22,16 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        
-        
         self.titleHeight = 30.f;
-   
         
         [self s_setupViews];
-        
-        
-    }
+            }
     return  self;
 }
 - (void)s_setupViews {
-    
  
     titleLab.backgroundColor = [UIColor yellowColor];
     [self addSubview:titleLab];
-    
-    
 }
 
 

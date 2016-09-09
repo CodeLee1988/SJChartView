@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		A83652941D80F3980068150B /* SJCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A83652931D80F3980068150B /* SJCircleView.m */; };
 		A83652AD1D8108600068150B /* SJChartAssistView.m in Sources */ = {isa = PBXBuildFile; fileRef = A83652AC1D8108600068150B /* SJChartAssistView.m */; };
-		A83652B81D8108A90068150B /* btg_pop_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A83652AF1D8108A90068150B /* btg_pop_bg.png */; };
-		A83652B91D8108A90068150B /* btg_pop_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A83652B01D8108A90068150B /* btg_pop_bg@2x.png */; };
-		A83652BA1D8108A90068150B /* btg_pop_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A83652B11D8108A90068150B /* btg_pop_bg@3x.png */; };
-		A83652C51D8167520068150B /* SJLineChartMianView.zip in Resources */ = {isa = PBXBuildFile; fileRef = A83652C41D8167520068150B /* SJLineChartMianView.zip */; };
+		A86074181D8284D9001630A9 /* SJChartLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A86074171D8284D9001630A9 /* SJChartLineView.m */; };
+		A86857921D82906400299E35 /* SJLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = A86857911D82906400299E35 /* SJLineChart.m */; };
+		A86857981D82B8EB00299E35 /* btg_pop_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A86857951D82B8EB00299E35 /* btg_pop_bg.png */; };
+		A86857991D82B8EB00299E35 /* btg_pop_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A86857961D82B8EB00299E35 /* btg_pop_bg@2x.png */; };
+		A868579A1D82B8EB00299E35 /* btg_pop_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A86857971D82B8EB00299E35 /* btg_pop_bg@3x.png */; };
 		A870BB7F1D7E628B009DF990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BB7E1D7E628B009DF990 /* main.m */; };
 		A870BB821D7E628B009DF990 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BB811D7E628B009DF990 /* AppDelegate.m */; };
 		A870BB881D7E628B009DF990 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A870BB861D7E628B009DF990 /* Main.storyboard */; };
@@ -46,10 +47,13 @@
 		A83652931D80F3980068150B /* SJCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCircleView.m; sourceTree = "<group>"; };
 		A83652AB1D8108600068150B /* SJChartAssistView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJChartAssistView.h; sourceTree = "<group>"; };
 		A83652AC1D8108600068150B /* SJChartAssistView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJChartAssistView.m; sourceTree = "<group>"; };
-		A83652AF1D8108A90068150B /* btg_pop_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btg_pop_bg.png; sourceTree = "<group>"; };
-		A83652B01D8108A90068150B /* btg_pop_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btg_pop_bg@2x.png"; sourceTree = "<group>"; };
-		A83652B11D8108A90068150B /* btg_pop_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btg_pop_bg@3x.png"; sourceTree = "<group>"; };
-		A83652C41D8167520068150B /* SJLineChartMianView.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SJLineChartMianView.zip; sourceTree = "<group>"; };
+		A86074161D8284D9001630A9 /* SJChartLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJChartLineView.h; sourceTree = "<group>"; };
+		A86074171D8284D9001630A9 /* SJChartLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJChartLineView.m; sourceTree = "<group>"; };
+		A86857901D82906400299E35 /* SJLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJLineChart.h; sourceTree = "<group>"; };
+		A86857911D82906400299E35 /* SJLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJLineChart.m; sourceTree = "<group>"; };
+		A86857951D82B8EB00299E35 /* btg_pop_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btg_pop_bg.png; sourceTree = "<group>"; };
+		A86857961D82B8EB00299E35 /* btg_pop_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btg_pop_bg@2x.png"; sourceTree = "<group>"; };
+		A86857971D82B8EB00299E35 /* btg_pop_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btg_pop_bg@3x.png"; sourceTree = "<group>"; };
 		A870BB7A1D7E628B009DF990 /* SJChartViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SJChartViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A870BB7E1D7E628B009DF990 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A870BB801D7E628B009DF990 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -98,10 +102,9 @@
 		A83652AE1D8108A90068150B /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				A83652C41D8167520068150B /* SJLineChartMianView.zip */,
-				A83652AF1D8108A90068150B /* btg_pop_bg.png */,
-				A83652B01D8108A90068150B /* btg_pop_bg@2x.png */,
-				A83652B11D8108A90068150B /* btg_pop_bg@3x.png */,
+				A86857951D82B8EB00299E35 /* btg_pop_bg.png */,
+				A86857961D82B8EB00299E35 /* btg_pop_bg@2x.png */,
+				A86857971D82B8EB00299E35 /* btg_pop_bg@3x.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -183,8 +186,12 @@
 		A870BBB11D7E6336009DF990 /* SJAxisView */ = {
 			isa = PBXGroup;
 			children = (
+				A86857901D82906400299E35 /* SJLineChart.h */,
+				A86857911D82906400299E35 /* SJLineChart.m */,
 				A870BBB21D7E639C009DF990 /* SJAxisView.h */,
 				A870BBB31D7E639C009DF990 /* SJAxisView.m */,
+				A86074161D8284D9001630A9 /* SJChartLineView.h */,
+				A86074171D8284D9001630A9 /* SJChartLineView.m */,
 				A83652921D80F3980068150B /* SJCircleView.h */,
 				A83652931D80F3980068150B /* SJCircleView.m */,
 			);
@@ -294,10 +301,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A83652C51D8167520068150B /* SJLineChartMianView.zip in Resources */,
-				A83652BA1D8108A90068150B /* btg_pop_bg@3x.png in Resources */,
-				A83652B91D8108A90068150B /* btg_pop_bg@2x.png in Resources */,
-				A83652B81D8108A90068150B /* btg_pop_bg.png in Resources */,
+				A868579A1D82B8EB00299E35 /* btg_pop_bg@3x.png in Resources */,
+				A86857991D82B8EB00299E35 /* btg_pop_bg@2x.png in Resources */,
+				A86857981D82B8EB00299E35 /* btg_pop_bg.png in Resources */,
 				A870BB8D1D7E628B009DF990 /* LaunchScreen.storyboard in Resources */,
 				A870BB8A1D7E628B009DF990 /* Assets.xcassets in Resources */,
 				A870BB881D7E628B009DF990 /* Main.storyboard in Resources */,
@@ -329,8 +335,10 @@
 				A83652AD1D8108600068150B /* SJChartAssistView.m in Sources */,
 				A83652941D80F3980068150B /* SJCircleView.m in Sources */,
 				A870BBB41D7E639C009DF990 /* SJAxisView.m in Sources */,
+				A86074181D8284D9001630A9 /* SJChartLineView.m in Sources */,
 				A870BBB71D7E63BC009DF990 /* ViewController.m in Sources */,
 				A870BB7F1D7E628B009DF990 /* main.m in Sources */,
+				A86857921D82906400299E35 /* SJLineChart.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
