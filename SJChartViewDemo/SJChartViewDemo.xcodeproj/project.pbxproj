@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A83652941D80F3980068150B /* SJCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A83652931D80F3980068150B /* SJCircleView.m */; };
-		A83652AD1D8108600068150B /* SJChartAssistView.m in Sources */ = {isa = PBXBuildFile; fileRef = A83652AC1D8108600068150B /* SJChartAssistView.m */; };
-		A86074181D8284D9001630A9 /* SJChartLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A86074171D8284D9001630A9 /* SJChartLineView.m */; };
-		A86857921D82906400299E35 /* SJLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = A86857911D82906400299E35 /* SJLineChart.m */; };
 		A86857981D82B8EB00299E35 /* btg_pop_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A86857951D82B8EB00299E35 /* btg_pop_bg.png */; };
 		A86857991D82B8EB00299E35 /* btg_pop_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A86857961D82B8EB00299E35 /* btg_pop_bg@2x.png */; };
 		A868579A1D82B8EB00299E35 /* btg_pop_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A86857971D82B8EB00299E35 /* btg_pop_bg@3x.png */; };
+		A86857B71D82BD2D00299E35 /* SJAxisView.m in Sources */ = {isa = PBXBuildFile; fileRef = A86857AF1D82BD2D00299E35 /* SJAxisView.m */; };
+		A86857B81D82BD2D00299E35 /* SJChartLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A86857B21D82BD2D00299E35 /* SJChartLineView.m */; };
+		A86857B91D82BD2D00299E35 /* SJCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A86857B41D82BD2D00299E35 /* SJCircleView.m */; };
+		A86857BA1D82BD2D00299E35 /* SJLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = A86857B61D82BD2D00299E35 /* SJLineChart.m */; };
 		A870BB7F1D7E628B009DF990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BB7E1D7E628B009DF990 /* main.m */; };
 		A870BB821D7E628B009DF990 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BB811D7E628B009DF990 /* AppDelegate.m */; };
 		A870BB881D7E628B009DF990 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A870BB861D7E628B009DF990 /* Main.storyboard */; };
@@ -21,7 +21,6 @@
 		A870BB8D1D7E628B009DF990 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A870BB8B1D7E628B009DF990 /* LaunchScreen.storyboard */; };
 		A870BB981D7E628C009DF990 /* SJChartViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BB971D7E628C009DF990 /* SJChartViewDemoTests.m */; };
 		A870BBA31D7E628C009DF990 /* SJChartViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BBA21D7E628C009DF990 /* SJChartViewDemoUITests.m */; };
-		A870BBB41D7E639C009DF990 /* SJAxisView.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BBB31D7E639C009DF990 /* SJAxisView.m */; };
 		A870BBB71D7E63BC009DF990 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A870BBB61D7E63BC009DF990 /* ViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -43,17 +42,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A83652921D80F3980068150B /* SJCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCircleView.h; sourceTree = "<group>"; };
-		A83652931D80F3980068150B /* SJCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCircleView.m; sourceTree = "<group>"; };
-		A83652AB1D8108600068150B /* SJChartAssistView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJChartAssistView.h; sourceTree = "<group>"; };
-		A83652AC1D8108600068150B /* SJChartAssistView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJChartAssistView.m; sourceTree = "<group>"; };
-		A86074161D8284D9001630A9 /* SJChartLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJChartLineView.h; sourceTree = "<group>"; };
-		A86074171D8284D9001630A9 /* SJChartLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJChartLineView.m; sourceTree = "<group>"; };
-		A86857901D82906400299E35 /* SJLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJLineChart.h; sourceTree = "<group>"; };
-		A86857911D82906400299E35 /* SJLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJLineChart.m; sourceTree = "<group>"; };
 		A86857951D82B8EB00299E35 /* btg_pop_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btg_pop_bg.png; sourceTree = "<group>"; };
 		A86857961D82B8EB00299E35 /* btg_pop_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btg_pop_bg@2x.png"; sourceTree = "<group>"; };
 		A86857971D82B8EB00299E35 /* btg_pop_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btg_pop_bg@3x.png"; sourceTree = "<group>"; };
+		A86857AE1D82BD2D00299E35 /* SJAxisView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAxisView.h; sourceTree = "<group>"; };
+		A86857AF1D82BD2D00299E35 /* SJAxisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAxisView.m; sourceTree = "<group>"; };
+		A86857B11D82BD2D00299E35 /* SJChartLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJChartLineView.h; sourceTree = "<group>"; };
+		A86857B21D82BD2D00299E35 /* SJChartLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJChartLineView.m; sourceTree = "<group>"; };
+		A86857B31D82BD2D00299E35 /* SJCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCircleView.h; sourceTree = "<group>"; };
+		A86857B41D82BD2D00299E35 /* SJCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCircleView.m; sourceTree = "<group>"; };
+		A86857B51D82BD2D00299E35 /* SJLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJLineChart.h; sourceTree = "<group>"; };
+		A86857B61D82BD2D00299E35 /* SJLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJLineChart.m; sourceTree = "<group>"; };
 		A870BB7A1D7E628B009DF990 /* SJChartViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SJChartViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A870BB7E1D7E628B009DF990 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A870BB801D7E628B009DF990 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -68,8 +67,6 @@
 		A870BB9E1D7E628C009DF990 /* SJChartViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SJChartViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A870BBA21D7E628C009DF990 /* SJChartViewDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SJChartViewDemoUITests.m; sourceTree = "<group>"; };
 		A870BBA41D7E628C009DF990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A870BBB21D7E639C009DF990 /* SJAxisView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAxisView.h; sourceTree = "<group>"; };
-		A870BBB31D7E639C009DF990 /* SJAxisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAxisView.m; sourceTree = "<group>"; };
 		A870BBB51D7E63BC009DF990 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		A870BBB61D7E63BC009DF990 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +104,29 @@
 				A86857971D82B8EB00299E35 /* btg_pop_bg@3x.png */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		A86857AD1D82BD2D00299E35 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A86857AE1D82BD2D00299E35 /* SJAxisView.h */,
+				A86857AF1D82BD2D00299E35 /* SJAxisView.m */,
+				A86857B01D82BD2D00299E35 /* SJLineChart */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A86857B01D82BD2D00299E35 /* SJLineChart */ = {
+			isa = PBXGroup;
+			children = (
+				A86857B11D82BD2D00299E35 /* SJChartLineView.h */,
+				A86857B21D82BD2D00299E35 /* SJChartLineView.m */,
+				A86857B31D82BD2D00299E35 /* SJCircleView.h */,
+				A86857B41D82BD2D00299E35 /* SJCircleView.m */,
+				A86857B51D82BD2D00299E35 /* SJLineChart.h */,
+				A86857B61D82BD2D00299E35 /* SJLineChart.m */,
+			);
+			path = SJLineChart;
 			sourceTree = "<group>";
 		};
 		A870BB711D7E628B009DF990 = {
@@ -175,27 +195,10 @@
 		A870BBB01D7E62D6009DF990 /* SJChartVeiw */ = {
 			isa = PBXGroup;
 			children = (
+				A86857AD1D82BD2D00299E35 /* Views */,
 				A83652AE1D8108A90068150B /* Resource */,
-				A83652AB1D8108600068150B /* SJChartAssistView.h */,
-				A83652AC1D8108600068150B /* SJChartAssistView.m */,
-				A870BBB11D7E6336009DF990 /* SJAxisView */,
 			);
 			path = SJChartVeiw;
-			sourceTree = "<group>";
-		};
-		A870BBB11D7E6336009DF990 /* SJAxisView */ = {
-			isa = PBXGroup;
-			children = (
-				A86857901D82906400299E35 /* SJLineChart.h */,
-				A86857911D82906400299E35 /* SJLineChart.m */,
-				A870BBB21D7E639C009DF990 /* SJAxisView.h */,
-				A870BBB31D7E639C009DF990 /* SJAxisView.m */,
-				A86074161D8284D9001630A9 /* SJChartLineView.h */,
-				A86074171D8284D9001630A9 /* SJChartLineView.m */,
-				A83652921D80F3980068150B /* SJCircleView.h */,
-				A83652931D80F3980068150B /* SJCircleView.m */,
-			);
-			path = SJAxisView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,14 +334,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A86857B81D82BD2D00299E35 /* SJChartLineView.m in Sources */,
+				A86857B71D82BD2D00299E35 /* SJAxisView.m in Sources */,
 				A870BB821D7E628B009DF990 /* AppDelegate.m in Sources */,
-				A83652AD1D8108600068150B /* SJChartAssistView.m in Sources */,
-				A83652941D80F3980068150B /* SJCircleView.m in Sources */,
-				A870BBB41D7E639C009DF990 /* SJAxisView.m in Sources */,
-				A86074181D8284D9001630A9 /* SJChartLineView.m in Sources */,
 				A870BBB71D7E63BC009DF990 /* ViewController.m in Sources */,
+				A86857BA1D82BD2D00299E35 /* SJLineChart.m in Sources */,
 				A870BB7F1D7E628B009DF990 /* main.m in Sources */,
-				A86857921D82906400299E35 /* SJLineChart.m in Sources */,
+				A86857B91D82BD2D00299E35 /* SJCircleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
