@@ -17,10 +17,6 @@
 @interface SJChartLineView() {
    
     NSMutableArray *pointArray;
-    
-    CGFloat xAxis_L;
-    CGFloat yAxis_L;
-    
     NSInteger lastSelectedIndex;
 }
 
@@ -29,7 +25,6 @@
 @implementation SJChartLineView
 
 - (void)setMaxValue:(CGFloat)maxValue {
-    
     _maxValue = maxValue;
 }
 
@@ -37,30 +32,35 @@
     _valueArray = valueArray;
 }
 
-- (void)setXScaleMarkLEN:(CGFloat)xScaleMarkLEN {
-
-    _xScaleMarkLEN = xScaleMarkLEN;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         lastSelectedIndex = - 1;
         pointArray = [NSMutableArray array];
-        
-        yAxis_L = frame.size.height;
-        xAxis_L = frame.size.width;
+        self.yAxis_L = frame.size.height;
+        self.xAxis_L = frame.size.width;
+      
     }
     return  self;
 }
 
 - (void)mapping {
    
+    [super mapping];
+    
     [self drawChartLine];
     [self drawGradient];
     
     [self setupCircleViews];
     [self setupCoverViews];
+}
+
+- (void)reloadDatas {
+    
+    [super reloadDatas];
+    
+    [self clearView];
+    [self mapping];
 }
 
 #pragma mark 画折线图
@@ -70,14 +70,15 @@
         
         for (int i = 0; i < self.valueArray.count; i ++) {
             
-            CGFloat point_X = self.xScaleMarkLEN * i;
+            CGFloat point_X = self.xScaleMarkLEN * i + self.startPoint.x;
             
             CGFloat value = [self.valueArray[i] floatValue];
             CGFloat percent = value / self.maxValue;
-            CGFloat point_Y = yAxis_L * (1 - percent);
+            CGFloat point_Y = self.yAxis_L * (1 - percent) + self.startPoint.y;
             
             CGPoint point = CGPointMake(point_X, point_Y);
             
+            // 记录各点的坐标方便后边添加渐变阴影 和 点击层视图 等
             [pointArray addObject:[NSValue valueWithCGPoint:point]];
             
             if (i == 0) {
@@ -98,27 +99,25 @@
 
 #pragma mark 渐变阴影
 - (void)drawGradient {
+        
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    gradientLayer.colors = @[(__bridge id)[UIColor colorWithRed:250/255.0 green:170/255.0 blue:10/255.0 alpha:0.8].CGColor,(__bridge id)[UIColor colorWithWhite:1 alpha:0.1].CGColor];
+
+    gradientLayer.locations=@[@0.0,@1.0];
+    gradientLayer.startPoint = CGPointMake(0.0,0.0);
+    gradientLayer.endPoint = CGPointMake(0.0,1);
     
     UIBezierPath *gradientPath = [[UIBezierPath alloc] init];
-    
-    [gradientPath moveToPoint:CGPointMake(0, yAxis_L)];
+    [gradientPath moveToPoint:CGPointMake(self.startPoint.x, self.yAxis_L + self.startPoint.y)];
     
     for (int i = 0; i < pointArray.count; i ++) {
         [gradientPath addLineToPoint:[pointArray[i] CGPointValue]];
     }
     
     CGPoint endPoint = [[pointArray lastObject] CGPointValue];
-    endPoint = CGPointMake(endPoint.x, yAxis_L);
+    endPoint = CGPointMake(endPoint.x + self.startPoint.x, self.yAxis_L + self.startPoint.y);
     [gradientPath addLineToPoint:endPoint];
-    
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, xAxis_L, yAxis_L);
-    gradientLayer.colors = @[(__bridge id)[UIColor colorWithRed:250/255.0 green:170/255.0 blue:10/255.0 alpha:0.8].CGColor,(__bridge id)[UIColor colorWithWhite:1 alpha:0.1].CGColor];
-    gradientLayer.accessibilityPath = gradientPath;
-    gradientLayer.locations=@[@0.0,@1.0];
-    gradientLayer.startPoint = CGPointMake(0.0,0.0);
-    gradientLayer.endPoint = CGPointMake(0.0,1);
-    
     CAShapeLayer *arc = [CAShapeLayer layer];
     arc.path = gradientPath.CGPath;
     gradientLayer.mask = arc;
@@ -146,28 +145,24 @@
         
         UIView *coverView = [[UIView alloc] init];
         coverView.tag = BASE_TAG_COVERVIEW + i;
-        
-        UITapGestureRecognizer *gesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesutreAction:)];
-        [coverView addGestureRecognizer:gesutre];
-        
+                
         if (i == 0) {
             
-            coverView.frame = CGRectMake(0, 0, self.xScaleMarkLEN  / 2, yAxis_L);
-            //coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.6];
+            coverView.frame = CGRectMake(self.startPoint.x, self.startPoint.y, self.xScaleMarkLEN  / 2, self.yAxis_L);
             [self addSubview:coverView];
         }
-        else if (i == pointArray.count - 1) {
+        else if (i == pointArray.count - 1 && pointArray.count == self.xMarkTitles.count) {
             CGPoint point = [pointArray[i] CGPointValue];
-            coverView.frame = CGRectMake(point.x - self.xScaleMarkLEN / 2, 0, self.xScaleMarkLEN  / 2, yAxis_L);
-            //coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.6];
+            coverView.frame = CGRectMake(point.x - self.xScaleMarkLEN / 2, self.startPoint.y, self.xScaleMarkLEN  / 2, self.yAxis_L);
             [self addSubview:coverView];
         }
         else {
             CGPoint point = [pointArray[i] CGPointValue];
-            coverView.frame = CGRectMake(point.x - self.xScaleMarkLEN / 2, 0, self.xScaleMarkLEN, yAxis_L);
-            //coverView.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.6];
+            coverView.frame = CGRectMake(point.x - self.xScaleMarkLEN / 2, self.startPoint.y, self.xScaleMarkLEN, self.yAxis_L);
             [self addSubview:coverView];
         }
+        UITapGestureRecognizer *gesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesutreAction:)];
+        [coverView addGestureRecognizer:gesutre];
     }
 }
 
@@ -204,6 +199,27 @@
 
     lastSelectedIndex = index;
 }
+
+#pragma mark- 清空视图
+- (void)clearView {
+    [self removeSubviews];
+    [self removeSublayers];
+}
+
+#pragma mark 移除 点击图层 、圆环 、数值标签
+- (void)removeSubviews {
+    for (UIView *view in self.subviews) {
+        [view removeFromSuperview];
+    }
+}
+
+#pragma mark 移除折线
+- (void)removeSublayers {
+    for (CALayer *layer in self.layer.sublayers) {
+        [layer removeFromSuperlayer];
+    }
+}
+
 
 
 @end

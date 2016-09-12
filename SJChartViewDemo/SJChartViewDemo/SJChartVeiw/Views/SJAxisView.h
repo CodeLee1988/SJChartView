@@ -10,10 +10,6 @@
 
 @interface SJAxisView : UIView
 
-@property (nonatomic, strong) NSArray *valueArray;
-
-@property (nonatomic, assign) CGFloat maxValue;
-
 /**
  *  Y轴刻度标签
  */
@@ -42,7 +38,12 @@
  */
 @property (nonatomic, assign) CGFloat xAxis_L;
 
-// 绘图
+/**
+ *  绘图
+ */
 - (void)mapping;
-
+/**
+ *  更新做标注数据
+ */
+- (void)reloadDatas;
 @end
