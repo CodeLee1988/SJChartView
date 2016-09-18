@@ -11,13 +11,32 @@
 #import "SJChartLineView.h"
 #import "SJAxisView.h"
 
-@interface SJLineChart()
+@interface SJLineChart() {
+    
+    NSMutableArray *xMarkTitles;
+    NSMutableArray *valueArray;
+    
+}
 
+/**
+ *  表名标签
+ */
+@property (nonatomic, strong) UILabel *titleLab;
+
+/**
+ *  显示折线图的可滑动视图
+ */
 @property (nonatomic, strong) UIScrollView *scrollView;
 
-@property (nonatomic, strong) SJAxisView *axisView;
-
+/**
+ *  折线图
+ */
 @property (nonatomic, strong) SJChartLineView *chartLineView;
+
+/**
+ *  X轴刻度标签 和 对应的折线图点的值
+ */
+@property (nonatomic, strong) NSArray *xMarkTitlesAndValues;
 
 @end
 
@@ -25,79 +44,98 @@
 
 - (void)setXScaleMarkLEN:(CGFloat)xScaleMarkLEN {
     _xScaleMarkLEN = xScaleMarkLEN;
-
-}
-
-- (void)setXMarkTitles:(NSArray *)xMarkTitles {
-    _xMarkTitles = xMarkTitles;
 }
 
 - (void)setYMarkTitles:(NSArray *)yMarkTitles {
     _yMarkTitles = yMarkTitles;
 }
 
-- (void)setValueArray:(NSArray *)valueArray {
-    _valueArray = valueArray;
-}
-
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 30, 320, 200)];
-        [self.scrollView setShowsHorizontalScrollIndicator:NO];
-        [self.scrollView setShowsVerticalScrollIndicator:NO];
-        [self addSubview:self.scrollView];
-        
-    }
-    return self;
-}
-
-- (void)show {
-    
-    if (!self.xMarkTitles) {
-        self.xMarkTitles = @[@"09-01",@"09-02",@"09-03",@"09-04",@"09-05",@"09-06",@"09-07"];
-    }
-    if (!self.yMarkTitles) {
-        self.yMarkTitles = @[@0,@20,@40,@60,@80,@100];
-    }
-    
-    if (!self.valueArray) {
-        self.valueArray =  @[@95,@44,@70,@60,@55,@100,@50];
-    }
-    
+- (void)setMaxValue:(CGFloat)maxValue {
+    _maxValue = maxValue;
  
-    [self mappingAxisView];
-    
-    self.scrollView.contentSize = self.axisView.frame.size;
-    
-    [self mappingChartLineView];
-    
-    [self.axisView addSubview:self.chartLineView];
-    [self.scrollView addSubview:self.axisView];
-
 }
 
-- (void)mappingChartLineView {
+- (void)setTitle:(NSString *)title {
+    _title = title;
     
-    self.chartLineView = [[SJChartLineView alloc] initWithFrame:CGRectMake(self.axisView.startPoint.x, self.axisView.startPoint.y, self.axisView.xAxis_L, self.axisView.yAxis_L)];
+}
+
+- (void)setXMarkTitlesAndValues:(NSArray *)xMarkTitlesAndValues titleKey:(NSString *)titleKey valueKey:(NSString *)valueKey {
     
-    self.chartLineView.xScaleMarkLEN = self.axisView.xScaleMarkLEN;
-    self.chartLineView.valueArray = self.valueArray;
-    self.chartLineView.maxValue = 100;
+    _xMarkTitlesAndValues = xMarkTitlesAndValues;
+    
+    xMarkTitles = [NSMutableArray array];
+    valueArray = [NSMutableArray array];
+    
+    for (NSDictionary *dic in xMarkTitlesAndValues) {
+        
+        [xMarkTitles addObject:[dic objectForKey:titleKey]];
+        [valueArray addObject:[dic objectForKey:valueKey]];
+    }
+}
+
+#pragma mark 绘图
+- (void)mapping {
+    
+    static CGFloat topToContainView = 0.f;
+    
+    if (self.title) {
+        
+        self.titleLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, CGRectGetWidth(self.frame), 20)];
+        self.titleLab.text = self.title;
+        self.titleLab.font = [UIFont systemFontOfSize:15];
+        self.titleLab.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:self.titleLab];
+        topToContainView = 25;
+    }
+    
+    if (!self.xMarkTitlesAndValues) {
+        
+        xMarkTitles = @[@1,@2,@3,@4,@5].mutableCopy;
+        valueArray = @[@2,@2,@2,@2,@2].mutableCopy;
+        
+        NSLog(@"折线图需要一个显示X轴刻度标签的数组xMarkTitles");
+        NSLog(@"折线图需要一个转折点值的数组valueArray");
+    }
+
+    
+    if (!self.yMarkTitles) {
+        self.yMarkTitles = @[@0,@1,@2,@3,@4,@5];
+        NSLog(@"折线图需要一个显示Y轴刻度标签的数组yMarkTitles");
+    }
+    
+
+    if (self.maxValue == 0) {
+        self.maxValue = 5;
+        NSLog(@"折线图需要一个最大值maxValue");
+        
+    }
+        
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, topToContainView, self.frame.size.width,self.frame.size.height - topToContainView)];
+    [self.scrollView setShowsHorizontalScrollIndicator:NO];
+    [self.scrollView setShowsVerticalScrollIndicator:NO];
+    [self addSubview:self.scrollView];
+    
+    self.chartLineView = [[SJChartLineView alloc] initWithFrame:self.scrollView.bounds];
+
+    self.chartLineView.yMarkTitles = self.yMarkTitles;
+    self.chartLineView.xMarkTitles = xMarkTitles;
+    self.chartLineView.xScaleMarkLEN = self.xScaleMarkLEN;
+    self.chartLineView.valueArray = valueArray;
+    self.chartLineView.maxValue = self.maxValue;
+    
+    [self.scrollView addSubview:self.chartLineView];
+    
     [self.chartLineView mapping];
     
+    self.scrollView.contentSize = self.chartLineView.bounds.size;
+   
 }
 
-- (void)mappingAxisView {
-    
-    self.axisView = [[SJAxisView alloc] initWithFrame:CGRectMake(0, 30, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
-    self.axisView.xScaleMarkLEN = self.xScaleMarkLEN;
-    self.axisView.xMarkTitles = self.xMarkTitles;
-    self.axisView.yMarkTitles = self.yMarkTitles;
-    [self.axisView mapping];
-    
+#pragma mark 更新数据
+- (void)reloadDatas {
+    [self.chartLineView reloadDatas];
 }
+
 
 @end

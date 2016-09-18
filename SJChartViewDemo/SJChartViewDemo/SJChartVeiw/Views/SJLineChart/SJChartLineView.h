@@ -7,23 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SJAxisView.h"
 
-@interface SJChartLineView : UIView
+@interface SJChartLineView : SJAxisView
 
 @property (nonatomic, strong) NSArray *valueArray;
 
 @property (nonatomic, assign) CGFloat maxValue;
 
 /**
- *  与x轴平行的网格线的间距
- */
-@property (nonatomic, assign) CGFloat xScaleMarkLEN;
-
-- (instancetype)initWithFrame:(CGRect)frame;
-
-/**
  *  绘图
  */
 - (void)mapping;
 
+/**
+ *  更新折线图数据
+ */
+- (void)reloadDatas;
+
 @end
+

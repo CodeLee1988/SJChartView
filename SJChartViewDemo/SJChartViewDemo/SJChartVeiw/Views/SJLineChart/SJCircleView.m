@@ -19,7 +19,6 @@
         self.backgroundColor = [UIColor whiteColor];
         self.layer.cornerRadius = radius;
         self.layer.masksToBounds = YES;
- 
     }
     return self;
 }

@@ -81,37 +81,35 @@
     return self;
 }
 
-
 - (void)setXScaleMarkLEN:(CGFloat)xScaleMarkLEN {
     _xScaleMarkLEN = xScaleMarkLEN;
 }
 
 - (void)setYMarkTitles:(NSArray *)yMarkTitles {
     _yMarkTitles = yMarkTitles;
-    
-    self.yScaleMarkLEN = (self.frame.size.height - YMARKLAB_HEIGHT - XMARKLAB_HEIGHT - YMARKLAB_TO_TOP) / (yMarkTitles.count - 1);
-    self.yAxis_L = self.yScaleMarkLEN * (self.yMarkTitles.count - 1);
 }
 
 - (void)setXMarkTitles:(NSArray *)xMarkTitles {
-    
     _xMarkTitles = xMarkTitles;
-    
-    if (self.xScaleMarkLEN == 0) {
-        self.xScaleMarkLEN = (axisViewWidth - HORIZON_YMARKLAB_YAXISLINE - YMARKLAB_WIDTH - XMARKLAB_WIDTH / 2.0) / (xMarkTitles.count - 1);
-    }
-    else {
-        axisViewWidth = self.xScaleMarkLEN * (xMarkTitles.count - 1) + HORIZON_YMARKLAB_YAXISLINE + YMARKLAB_WIDTH + XMARKLAB_WIDTH / 2.0;
-    }
-    self.xAxis_L = self.xScaleMarkLEN * (self.xMarkTitles.count - 1);
 }
-
 
 #pragma mark 绘图
 - (void)mapping {
     
-    [self clearView];
- 
+    self.yScaleMarkLEN = (self.frame.size.height - YMARKLAB_HEIGHT - XMARKLAB_HEIGHT - YMARKLAB_TO_TOP) / (self.yMarkTitles.count - 1);
+   
+    self.yAxis_L = self.yScaleMarkLEN * (self.yMarkTitles.count - 1);
+    
+    if (self.xScaleMarkLEN == 0) {
+        self.xScaleMarkLEN = (axisViewWidth - HORIZON_YMARKLAB_YAXISLINE - YMARKLAB_WIDTH - XMARKLAB_WIDTH / 2.0) / (self.xMarkTitles.count - 1);
+    }
+    else {
+        axisViewWidth = self.xScaleMarkLEN * (self.xMarkTitles.count - 1) + HORIZON_YMARKLAB_YAXISLINE + YMARKLAB_WIDTH + XMARKLAB_WIDTH / 2.0;
+    }
+    
+    self.xAxis_L = self.xScaleMarkLEN * (self.xMarkTitles.count - 1);
+    
+    
     self.frame  = CGRectMake(0, 0, axisViewWidth, axisViewHeight);
     
     [self setupYMarkLabs];
@@ -124,6 +122,11 @@
     [self drawXGridline];
 }
 
+#pragma mark 更新坐标轴数据
+- (void)reloadDatas {
+    [self clearView];
+    [self mapping];
+}
 
 #pragma mark  Y轴上的刻度标签
 - (void)setupYMarkLabs {
@@ -131,7 +134,6 @@
     for (int i = 0; i < self.yMarkTitles.count; i ++) {
         
         UILabel *markLab = [[UILabel alloc] initWithFrame:CGRectMake(0, self.startPoint.y - YMARKLAB_HEIGHT / 2 + i * self.yScaleMarkLEN, YMARKLAB_WIDTH, YMARKLAB_HEIGHT)];
-        //markLab.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.5];
         markLab.textAlignment = NSTextAlignmentRight;
         markLab.font = [UIFont systemFontOfSize:12.0];
         markLab.text = [NSString stringWithFormat:@"%@", self.yMarkTitles[self.yMarkTitles.count - 1 - i]];
@@ -143,9 +145,7 @@
 - (void)setupXMarkLabs {
 
     for (int i = 0;i < self.xMarkTitles.count; i ++) {
-        
         UILabel *markLab = [[UILabel alloc] initWithFrame:CGRectMake(self.startPoint.x - XMARKLAB_WIDTH / 2 + i * self.xScaleMarkLEN, self.yAxis_L + self.startPoint.y + YMARKLAB_HEIGHT / 2, XMARKLAB_WIDTH, XMARKLAB_HEIGHT)];
-       // markLab.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:0.6];
         markLab.textAlignment = NSTextAlignmentCenter;
         markLab.font = [UIFont systemFontOfSize:11.0];
         markLab.text = self.xMarkTitles[i];
@@ -154,8 +154,8 @@
     
 }
 
-#pragma mark  X轴
-- (void)drawXAxsiLine {
+#pragma mark  Y轴
+- (void)drawYAxsiLine {
     UIBezierPath *yAxisPath = [[UIBezierPath alloc] init];
     [yAxisPath moveToPoint:CGPointMake(self.startPoint.x, self.startPoint.y + self.yAxis_L)];
     [yAxisPath addLineToPoint:CGPointMake(self.startPoint.x, self.startPoint.y)];
@@ -168,8 +168,8 @@
     [self.layer addSublayer:yAxisLayer];
 }
 
-#pragma mark  Y轴
-- (void)drawYAxsiLine {
+#pragma mark  X轴
+- (void)drawXAxsiLine {
     UIBezierPath *xAxisPath = [[UIBezierPath alloc] init];
     [xAxisPath moveToPoint:CGPointMake(self.startPoint.x, self.yAxis_L + self.startPoint.y)];
     [xAxisPath addLineToPoint:CGPointMake(self.xAxis_L + self.startPoint.x, self.yAxis_L + self.startPoint.y)];
@@ -220,7 +220,7 @@
     }
 }
 
-#pragma mark 清空视图上的线和子视图
+#pragma mark- 清空视图
 - (void)clearView {
     
     [self removeAllSubLabs];
@@ -239,9 +239,7 @@
 #pragma mark 清空网格线
 - (void)removeAllSubLayers{
 
-    NSArray * subLayers = [NSArray arrayWithArray:self.layer.sublayers];
-    for (CALayer * layer in subLayers) {
-        [layer removeAllAnimations];
+    for (CALayer * layer in self.layer.sublayers) {
         [layer removeFromSuperlayer];
     }
 }
