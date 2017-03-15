@@ -95,6 +95,19 @@
 
 #pragma mark 绘图
 - (void)mapping {
+
+    if(self.yMarkTitles.count == 1) {
+        
+        NSLog(@"怎么只有一条数据呢，没比较，折线图意义何在？");
+        
+        return;
+    }
+
+    if(self.xMarkTitles.count == 1) {
+        
+        NSLog(@"怎么只有一条数据呢，没比较，折线图意义何在？");
+        return;
+    }
     
     self.yScaleMarkLEN = (self.frame.size.height - YMARKLAB_HEIGHT - XMARKLAB_HEIGHT - YMARKLAB_TO_TOP) / (self.yMarkTitles.count - 1);
    
@@ -108,7 +121,6 @@
     }
     
     self.xAxis_L = self.xScaleMarkLEN * (self.xMarkTitles.count - 1);
-    
     
     self.frame  = CGRectMake(0, 0, axisViewWidth, axisViewHeight);
     

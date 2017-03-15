@@ -37,19 +37,16 @@
     [self.lineChart setXMarkTitlesAndValues:@[@{@"item":@"9月1日",@"count":@2},@{@"item":@"9月2日",@"count":@3},@{@"item":@"9月3日",@"count":@0},@{@"item":@"9月4日",@"count":@2},@{@"item":@"9月5日",@"count":@2},@{@"item":@"9月6日",@"count":@1},@{@"item":@"9月7日",@"count":@5}] titleKey:@"item" valueKey:@"count"]; // X轴刻度标签及相应的值
 
     // lineChart.xScaleMarkLEN = 60; // 可以不设，会根据视图的宽度自适应,设置后如果折线图的宽度大于视图宽度，折线图可以滑动
-    
     //设置完数据等属性后绘图折线图
     [self.lineChart mapping];
     
     [self.view addSubview:self.lineChart];
-
 }
-
 
 - (IBAction)updateChart:(id)sender {
     
+    [self.lineChart setXMarkTitlesAndValues:@[@{@"item":@"9月1日",@"count":@1},@{@"item":@"9月2日",@"count":@0},@{@"item":@"9月3日",@"count":@4},@{@"item":@"9月4日",@"count":@2},@{@"item":@"9月5日",@"count":@5},@{@"item":@"9月6日",@"count":@1},@{@"item":@"9月7日",@"count":@5}] titleKey:@"item" valueKey:@"count"]; // X轴刻度标签及相应的值
     
-    [self.lineChart setXMarkTitlesAndValues:@[@{@"item":@"9月1日",@"count":@1},@{@"item":@"9月2日",@"count":@0},@{@"item":@"9月3日",@"count":@4},@{@"item":@"9月4日",@"count":@2},@{@"item":@"9月5日",@"count":@5},@{@"item":@"9月6日",@"count":@1},@{@"item":@"9月7日",@"count":@5}] titleKey:@"item" valueKey:@"count"]; // X轴刻度标签及相应的值    
     //设置完数据等属性后绘图折线图
     [self.lineChart reloadDatas];
     
