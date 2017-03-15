@@ -36,7 +36,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         lastSelectedIndex = - 1;
-        pointArray = [NSMutableArray array];
         self.yAxis_L = frame.size.height;
         self.xAxis_L = frame.size.width;
       
@@ -57,49 +56,55 @@
 
 - (void)reloadDatas {
     
-    [super reloadDatas];
-    
     [self clearView];
+    
     [self mapping];
 }
 
 #pragma mark 画折线图
-- (void)drawChartLine
-    {
-        UIBezierPath *pAxisPath = [[UIBezierPath alloc] init];
+- (void)drawChartLine {
+    
+    if (pointArray) {
+        [pointArray removeAllObjects];
+    }
+    else {
+        pointArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    
+    UIBezierPath *pAxisPath = [[UIBezierPath alloc] init];
+    
+    for (int i = 0; i < self.valueArray.count; i ++) {
         
-        for (int i = 0; i < self.valueArray.count; i ++) {
-            
-            CGFloat point_X = self.xScaleMarkLEN * i + self.startPoint.x;
-            
-            CGFloat value = [self.valueArray[i] floatValue];
-            CGFloat percent = value / self.maxValue;
-            CGFloat point_Y = self.yAxis_L * (1 - percent) + self.startPoint.y;
-            
-            CGPoint point = CGPointMake(point_X, point_Y);
-            
-            // 记录各点的坐标方便后边添加渐变阴影 和 点击层视图 等
-            [pointArray addObject:[NSValue valueWithCGPoint:point]];
-            
-            if (i == 0) {
-                [pAxisPath moveToPoint:point];
-            }
-            else {
-                [pAxisPath addLineToPoint:point];
-            }
+        CGFloat point_X = self.xScaleMarkLEN * i + self.startPoint.x;
+        
+        CGFloat value = [self.valueArray[i] floatValue];
+        CGFloat percent = value / self.maxValue;
+        CGFloat point_Y = self.yAxis_L * (1 - percent) + self.startPoint.y;
+        
+        CGPoint point = CGPointMake(point_X, point_Y);
+        
+        // 记录各点的坐标方便后边添加渐变阴影 和 点击层视图 等
+        [pointArray addObject:[NSValue valueWithCGPoint:point]];
+        
+        if (i == 0) {
+            [pAxisPath moveToPoint:point];
         }
-
-        CAShapeLayer *pAxisLayer = [CAShapeLayer layer];
-        pAxisLayer.lineWidth = 1;
-        pAxisLayer.strokeColor = [UIColor orangeColor].CGColor;
-        pAxisLayer.fillColor = [UIColor clearColor].CGColor;
-        pAxisLayer.path = pAxisPath.CGPath;
-        [self.layer addSublayer:pAxisLayer];
+        else {
+            [pAxisPath addLineToPoint:point];
+        }
+    }
+    
+    CAShapeLayer *pAxisLayer = [CAShapeLayer layer];
+    pAxisLayer.lineWidth = 1;
+    pAxisLayer.strokeColor = [UIColor orangeColor].CGColor;
+    pAxisLayer.fillColor = [UIColor clearColor].CGColor;
+    pAxisLayer.path = pAxisPath.CGPath;
+    [self.layer addSublayer:pAxisLayer];
 }
 
 #pragma mark 渐变阴影
 - (void)drawGradient {
-        
+    
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     gradientLayer.colors = @[(__bridge id)[UIColor colorWithRed:250/255.0 green:170/255.0 blue:10/255.0 alpha:0.8].CGColor,(__bridge id)[UIColor colorWithWhite:1 alpha:0.1].CGColor];
@@ -116,7 +121,7 @@
     }
     
     CGPoint endPoint = [[pointArray lastObject] CGPointValue];
-    endPoint = CGPointMake(endPoint.x + self.startPoint.x, self.yAxis_L + self.startPoint.y);
+    endPoint = CGPointMake(endPoint.x, self.yAxis_L + self.startPoint.y);
     [gradientPath addLineToPoint:endPoint];
     CAShapeLayer *arc = [CAShapeLayer layer];
     arc.path = gradientPath.CGPath;
@@ -208,14 +213,19 @@
 
 #pragma mark 移除 点击图层 、圆环 、数值标签
 - (void)removeSubviews {
-    for (UIView *view in self.subviews) {
+    
+    NSArray *subViews = [NSArray arrayWithArray:self.subviews];
+    
+    for (UIView *view in subViews) {
         [view removeFromSuperview];
     }
+   
 }
 
 #pragma mark 移除折线
 - (void)removeSublayers {
-    for (CALayer *layer in self.layer.sublayers) {
+    NSArray * subLayers = [NSArray arrayWithArray:self.layer.sublayers];
+    for (CALayer * layer in subLayers) {
         [layer removeFromSuperlayer];
     }
 }

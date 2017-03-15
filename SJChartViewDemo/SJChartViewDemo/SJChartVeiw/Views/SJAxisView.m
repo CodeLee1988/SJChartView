@@ -229,17 +229,20 @@
 
 #pragma mark 清空标签
 - (void)removeAllSubLabs {
-    for (UIView * view in self.subviews) {
-        if ([view isKindOfClass:[UILabel class]]) {
-            [(UILabel *)view removeFromSuperview];
-        }
+   
+    NSArray *subviews = [NSArray arrayWithArray:self.subviews];
+   
+    for (UIView *view in subviews) {
+        [view removeFromSuperview];
     }
 }
 
 #pragma mark 清空网格线
 - (void)removeAllSubLayers{
 
-    for (CALayer * layer in self.layer.sublayers) {
+    NSArray * subLayers = [NSArray arrayWithArray:self.layer.sublayers];
+    for (CALayer * layer in subLayers) {
+        [layer removeAllAnimations];
         [layer removeFromSuperlayer];
     }
 }

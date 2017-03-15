@@ -64,8 +64,20 @@
     
     _xMarkTitlesAndValues = xMarkTitlesAndValues;
     
-    xMarkTitles = [NSMutableArray array];
-    valueArray = [NSMutableArray array];
+    if (xMarkTitles) {
+        [xMarkTitles removeAllObjects];
+    }
+    else {
+        xMarkTitles = [NSMutableArray arrayWithCapacity:0];
+
+    }
+    
+    if (valueArray) {
+        [valueArray removeAllObjects];
+    }
+    else {
+        valueArray = [NSMutableArray arrayWithCapacity:0];
+    }
     
     for (NSDictionary *dic in xMarkTitlesAndValues) {
         
